@@ -1,0 +1,20 @@
+# permissions for end users to view cakes.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cake-viewer-role
+rules:
+- apiGroups:
+  - tutorials.piunnerup.com
+  resources:
+  - cakes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - tutorials.piunnerup.com
+  resources:
+  - cakes/status
+  verbs:
+  - get

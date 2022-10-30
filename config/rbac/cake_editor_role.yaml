@@ -1,0 +1,24 @@
+# permissions for end users to edit cakes.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cake-editor-role
+rules:
+- apiGroups:
+  - tutorials.piunnerup.com
+  resources:
+  - cakes
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - tutorials.piunnerup.com
+  resources:
+  - cakes/status
+  verbs:
+  - get

@@ -1,0 +1,10 @@
+apiVersion: tutorials.piunnerup.com/v1
+kind: Cake
+metadata:
+  name: cake-sample
+spec:
+  port: 8099
+  replicaCount: 1
+  DECORATION: "hats"
+  COLOUR: "colour"
+  MESSAGE: "They are edible"
