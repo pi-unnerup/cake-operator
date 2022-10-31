@@ -178,6 +178,10 @@ func (r *CakeReconciler) createDeployment(cakeCR *tutorialsv1.Cake) *appsv1.Depl
 								Name:  "DECORATION",
 								Value: cakeCR.Spec.DECORATION,
 							},
+							{
+								Name:  "BACKGROUND",
+								Value: cakeCR.Spec.BACKGROUND,
+							},
 						},
 						Ports: []corev1.ContainerPort{{
 							ContainerPort: 80,

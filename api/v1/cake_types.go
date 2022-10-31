@@ -33,6 +33,8 @@ type CakeSpec struct {
 	COLOUR string `json:"COLOUR"`
 	//Decoration can be one of "ghost" or "heart"
 	DECORATION string `json:"DECORATION"`
+	//Background colour, e.g. Aquamarine
+	BACKGROUND string `json:"BACKGROUND"`
 	MESSAGE    string `json:"MESSAGE"`
 }
 

@@ -35,6 +35,9 @@ spec:
           spec:
             description: CakeSpec defines the desired state of Cake
             properties:
+              BACKGROUND:
+                description: Background colour, e.g. Aquamarine
+                type: string
               COLOUR:
                 description: COLOUR can be one of "white" or "colour"
                 type: string
@@ -52,6 +55,7 @@ spec:
                 format: int32
                 type: integer
             required:
+            - BACKGROUND
             - COLOUR
             - DECORATION
             - MESSAGE
