@@ -5,7 +5,18 @@ metadata:
 spec:
   port: 8099
   replicaCount: 1
-  DECORATION: "hat"
-  COLOUR: "colour"
+  # DECORATION values are:
+  # - "no"
+  # - "ghost"
+  # - "bat"
+  # - "candycorn"
+  # - "cross"
+  # - "hat"
+  # - "heart"
+  DECORATION: "no"
+  # COLOUR values are
+  # - "white"
+  # - "colour"
+  COLOUR: "white"
   MESSAGE: "They are edible"
-  BACKGROUND: "Aquamarine"
+  BACKGROUND: "#FFFFFF"
