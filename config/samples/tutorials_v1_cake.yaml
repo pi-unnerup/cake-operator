@@ -3,7 +3,7 @@ kind: Cake
 metadata:
   name: cake-sample
 spec:
-  port: 8099
+  port: 30300
   replicaCount: 1
   # DECORATION values are:
   # - "no"
