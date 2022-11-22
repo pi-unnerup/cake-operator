@@ -42,7 +42,7 @@ spec:
                 description: COLOUR can be one of "white" or "colour"
                 type: string
               DECORATION:
-                description: Decoration can be one of "ghost" or "heart"
+                description: The topping of the cake
                 type: string
               MESSAGE:
                 type: string

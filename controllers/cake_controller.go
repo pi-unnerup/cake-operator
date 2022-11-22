@@ -128,9 +128,9 @@ func (r *CakeReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.
 			// TODO: update for env??
 			// Service exists, check if the port has to be updated.
 			var port int32 = cake.Spec.Port
-			if existingService.Spec.Ports[0].Port != port {
-				log.Info("🔁 Port number changes, update the service! 🔁")
-				existingService.Spec.Ports[0].Port = port
+			if existingService.Spec.Ports[0].NodePort != port {
+				log.Info("🔁 NodePort number changes, update the service! 🔁")
+				existingService.Spec.Ports[0].NodePort = port
 				err = r.Update(ctx, existingService)
 				if err != nil {
 					log.Error(err, "❌ Failed to update Service", "Service.Namespace", existingService.Namespace, "Service.Name", existingService.Name)
@@ -211,8 +211,9 @@ func (r *CakeReconciler) createService(cakeCR *tutorialsv1.Cake) *corev1.Service
 				{
 					Name:       "http",
 					Protocol:   corev1.ProtocolTCP,
-					Port:       cakeCR.Spec.Port,
+					Port:       80,
 					TargetPort: intstr.FromInt(80),
+					NodePort:   cakeCR.Spec.Port,
 				},
 			},
 			Type: corev1.ServiceTypeLoadBalancer,
