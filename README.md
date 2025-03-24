@@ -2,23 +2,44 @@
 You’ll need a Kubernetes cluster to run against. You can use [KIND](https://sigs.k8s.io/kind) to get a local cluster for testing, or run against a remote cluster.
 **Note:** Your controller will automatically use the current context in your kubeconfig file (i.e. whatever cluster `kubectl cluster-info` shows).
 
+### Prerequisites
+
+Prerecuisites for running this lab are: 
+
+1. A default cluster that you can deploy resources to. `kubectl cluster-info` should show you your current context
+2. Docker installed. `docker version` should return the version
+3. Make installed. `make --version` should return the version
+4. golang v1.24. `go version` should return the version
+5. A Docker registry that you can push images to. You can create a free registry on [dockerhub](https://www.docker.com/products/docker-hub/)
+
 ### Running on the cluster
-1. Install Instances of Custom Resources:
-
-```sh
-kubectl apply -f config/samples/
-```
-
-2. Build and push your image to the location specified by `IMG`:
+1. Build and push your image to the location specified by `IMG`:
 	
 ```sh
-make docker-build docker-push IMG=<some-registry>/cake-operator:tag
+make docker-build IMG=<some-registry>/cake-operator:tag
+```
+
+```sh
+make docker-push IMG=<some-registry>/cake-operator:tag
 ```
 	
-3. Deploy the controller to the cluster with the image specified by `IMG`:
+2. Deploy the controller to the cluster with the image specified by `IMG`:
 
 ```sh
 make deploy IMG=<some-registry>/cake-operator:tag
+./bin/kustomize build config/crd | kubectl apply -f -
+```
+
+You should be able to confirm the controller is deployed by 
+
+```sh
+kubectl api-resources -n cake-operator-system
+```
+
+3. Install Instances of Custom Resources:
+
+```sh
+kubectl apply -f config/samples/
 ```
 
 ### Uninstall CRDs
