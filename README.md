@@ -12,8 +12,11 @@ Prerecuisites for running this lab are:
 4. golang v1.24. `go version` should return the version
 5. A Docker registry that you can push images to. You can create a free registry on [dockerhub](https://www.docker.com/products/docker-hub/)
 
-### Running on the cluster
-1. Build and push your image to the location specified by `IMG`:
+### Setup
+
+The operator functionality runs as a container inside the cluster.
+
+Build and push your image to the location specified by `IMG`:
 	
 ```sh
 make docker-build IMG=<some-registry>/cake-operator:tag
@@ -22,24 +25,51 @@ make docker-build IMG=<some-registry>/cake-operator:tag
 ```sh
 make docker-push IMG=<some-registry>/cake-operator:tag
 ```
-	
-2. Deploy the controller to the cluster with the image specified by `IMG`:
+
+Create your manifests
+```sh
+make manifests
+```
+
+`ls -la config/crd/bases/` will show you the timestamp of the newly created manifest
+
+### Deploy the operator and Custom Resource Definitiion
+
+Deploy the operator to the cluster with the image specified by `IMG`:
 
 ```sh
 make deploy IMG=<some-registry>/cake-operator:tag
-./bin/kustomize build config/crd | kubectl apply -f -
+make install
 ```
+Notice that lots of Kubernetes Resources have been created as part of the operator. 
 
-You should be able to confirm the controller is deployed by 
+You should be able to confirm the CRD is installed by 
 
 ```sh
 kubectl api-resources -n cake-operator-system
 ```
 
-3. Install Instances of Custom Resources:
+where your 'Cakes' resource type now shows up.
+
+### Bake the cake
+
+Now it's time to create your cake object using your operator and CRD created in the previous steps:
 
 ```sh
-kubectl apply -f config/samples/
+kubectl apply -f config/samples/tutorials_v1_cake.yaml
+```
+
+Your cake is now up and running! `kubectl describe cake cake-sample` confirms some details about your cake such as that it is running on nodeport 30300. Please note if you're running in a local cluster the 'node' may not be your local machine and so in order to view your cake in the browser please forward it to your localhost. [Here](https://docs.rancherdesktop.io/ui/port-forwarding/) is a neat guide on how to do it on Rancher Desktop in 10 seconds. 
+
+Go to your browser and view your cake; localhost:30300 (or whichever port you assigned on your node)
+
+### Customise the cake
+
+Change your cake object `config/samples/tutorials_v1_cake.yaml` by adding some custom configuration, such as a colour and a decoration, then delete and apply the object again. 
+
+```sh
+kubectl delete -f config/samples/tutorials_v1_cake.yaml
+kubectl apply -f config/samples/tutorials_v1_cake.yaml
 ```
 
 ### Uninstall CRDs
@@ -65,23 +95,10 @@ This project aims to follow the Kubernetes [Operator pattern](https://kubernetes
 It uses [Controllers](https://kubernetes.io/docs/concepts/architecture/controller/) 
 which provides a reconcile function responsible for synchronizing resources untile the desired state is reached on the cluster 
 
-### Test It Out
-1. Install the CRDs into the cluster:
-
-```sh
-make install
-```
-
-2. Run your controller (this will run in the foreground, so switch to a new terminal if you want to leave it running):
-
-```sh
-make run
-```
-
-**NOTE:** You can also run this in one step by running: `make install run`
 
 ### Modifying the API definitions
-If you are editing the API definitions, generate the manifests such as CRs or CRDs using:
+
+If you are editing the API definitions, don't forget to generate the manifests such as CRs or CRDs using:
 
 ```sh
 make manifests
@@ -90,6 +107,8 @@ make manifests
 **NOTE:** Run `make --help` for more information on all potential `make` targets
 
 More information can be found via the [Kubebuilder Documentation](https://book.kubebuilder.io/introduction.html)
+
+This operator was built using [this guide](https://medium.com/developingnodes/mastering-kubernetes-operators-your-definitive-guide-to-starting-strong-70ff43579eb9)
 
 ## License
 
