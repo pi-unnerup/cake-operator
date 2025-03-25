@@ -13,10 +13,10 @@ spec:
   # - "cross"
   # - "hat"
   # - "heart"
-  DECORATION: "bat"
+  DECORATION: "no"
   # COLOUR values are
   # - "white"
   # - "colour"
-  COLOUR: "colour"
-  MESSAGE: "They are delicious"
+  COLOUR: "white"
+  MESSAGE: "They are edible"
   BACKGROUND: "#FFFFFF"
