@@ -20,6 +20,12 @@ Prerecuisites for running this lab are:
 ## 1. Setup
 ## Rancher
 
+Ensure your cluster is up and running: 
+
+```sh
+kubectl cluster-info
+```
+
 If you are using your own cluster or a local cluster on your own machine such as Rancher or Docker Desktop, you will need to first install the operator:
 
 ```sh
@@ -130,7 +136,7 @@ if existingService.Spec.Ports[0].NodePort != port {
     }
 ```
 
-We now have three options: we can write a reconciliation block for DECORATION and reinstall the operator, we can change one of the values with an reconcillication loop (for example the port) or we can delete the cake resource and recreate it - in the interest of time, we will do the latter, but feel free to give it a go yourself.
+We now have two options: we can write a reconciliation block for DECORATION and reinstall the operator, or we can delete the cake resource and recreate it - in the interest of time, we will do the latter, but feel free to give it a go yourself.
 
 ```sh
 kubectl delete cake cake-sample
@@ -140,8 +146,6 @@ kubectl apply -f config/samples/tutorials_v1_cake.yaml
 When you refresh your browser you should see that your cake now has decorations.
 
 Play around with different values for all of your cake specs. Note that BACKGROUND can be both hashes and names of colours.
-
-You can submit your cake now (see section 5), or move onto the next section where we will update the operator to include an additional spec.
 
 ## 4. Updating the Operator
 
