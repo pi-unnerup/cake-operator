@@ -13,4 +13,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: unnerup/cake-operator
-  newTag: tag
+  newTag: march
